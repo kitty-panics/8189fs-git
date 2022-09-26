@@ -1,0 +1,13 @@
+post_upgrade() {
+    KVER="$(pacman -Q | grep linux-armv7 | head -1 | cut -d' ' -f2)"
+    EXTRAMODULES="$(basename $(readlink -f /usr/lib/modules/$KVER-ARCH/extramodules/))"
+    depmod "$KVER-ARCH"
+}
+
+post_install() {
+    post_upgrade
+}
+
+post_remove() {
+    post_upgrade
+}
